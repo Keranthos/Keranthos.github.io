@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法：单调栈," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="把前几周值得记下来的题目写一写，我是ai战神（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法课程作业_Week1-6">
+<meta property="og:url" content="https://shanjhs.github.io/2024/10/30/24-10-30/index.html">
+<meta property="og:site_name" content="山角函兽的小窝">
+<meta property="og:description" content="把前几周值得记下来的题目写一写，我是ai战神（">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-10-30T00:17:47.000Z">
+<meta property="article:modified_time" content="2024-10-30T07:21:38.152Z">
+<meta property="article:author" content="山角函兽">
+<meta property="article:tag" content="算法：单调栈">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ShanJHS.github.io/2024/10/30/24-10-30/"/>
+
+
+
+
+
+  <title>数据结构与算法课程作业_Week1-6 | 山角函兽的小窝</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">山角函兽的小窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ShanJHS.github.io/2024/10/30/24-10-30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headImage.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="山角函兽的小窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法课程作业_Week1-6</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-10-30T08:17:47+08:00">
+                2024-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/" itemprop="url" rel="index">
+                    <span itemprop="name">课程作业</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  把前几周值得记下来的题目写一写，我是ai战神（
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据结构与算法课程作业-Week1-6（补档）"><a href="#数据结构与算法课程作业-Week1-6（补档）" class="headerlink" title="数据结构与算法课程作业       Week1-6（补档）"></a>数据结构与算法课程作业       Week1-6（补档）</h2><h4 id="题目一：字符串中的单词反转-Week1-3"><a href="#题目一：字符串中的单词反转-Week1-3" class="headerlink" title="题目一：字符串中的单词反转  Week1-3"></a>题目一：字符串中的单词反转  Week1-3</h4><details>
+    <summary>原题</summary>
+    <p>
+        给定一个字符串，你需要颠倒一个句子中每个单词中的字符顺序，同时保留空格和初始单词顺序。
+    </p>
+</details>
+
+<h5 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h5><p>一道非常简单的字符串操作问题，但如果以字符数组的形式读入一整行字符串并操作后再记录空格、利用数组操作的方法略显麻烦。</p>
+<p>这道题有两种也许会快一点的方法，一个是建立数组vector[string] strs然后在读出时反读每个字符串即可，另一个是直接用reverse()函数，这个函数可以省去数组的反转操作</p>
+<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><details>
+    <summary>reverse函数使用</summary>
+    <p>
+        1、reverse(first,last)中first、last为起始、结束的迭代器或地址，会将这中间的元素全部反转
+        2、注意last指向的是最后一个元素的下一位地址/迭代器
+        3、该函数没有返回值
+    </p>
+</details>
+
+
+
+
+
+
+
+<h4 id="题目二：移除K位数字-Week5-3"><a href="#题目二：移除K位数字-Week5-3" class="headerlink" title="题目二：移除K位数字   Week5-3"></a>题目二：移除K位数字   Week5-3</h4><details>
+    <summary>原题</summary>
+    <p>
+        给你一个以字符串表示的非负整数 num 和一个整数 k ，移除这个数中的 k 位数字，使得剩下的数字最小。请你以字符串形式返回这个最小的数字。
+        <a href = "https://leetcode.cn/problems/remove-k-digits/description/">力扣原题点这里哦</a>
+    </p>
+</details>
+
+<h5 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h5><p><strong>基本想法：</strong></p>
+<p>首先最基本的是，两个数比较大小是从高数位比到低数位，即12a34与12b34，若a &gt; b则前者更大。</p>
+<p>因为高数位的影响更大，所以在可移除的情况下，删除高数位的大数更好，所以应该从左向右遍历。</p>
+<p>如果该数（某个数位上的数字）大于其更低数位上的数，那么就删去（因为此时，让更低数位上的小数代替高数位的大数更好）</p>
+<p><strong>改进思路：</strong></p>
+<p>以上是基本思路，那么假设这样一个数2341，K &#x3D; 3时，要遍历三遍：第一遍删除4，第二遍3，第三遍2。因为此时234都大于1，但每次遍历时都只能删去一个数。那么其时间复杂度可能就为O（nk) 可能过大。改进方法是能否在删去数时能否将之前的数都判断一遍，直到删除到K个数或者碰到不需要删除的数。</p>
+<p>这种后进先出的结构就想到了单调栈，遍历时将不需要操作的数存进栈中。要删除时就挨个出栈判断。</p>
+<p>但由于不会有前导零的存在，考虑102，K &#x3D; 1时，删除1就只剩下一位数，删除2还剩下两位数，所以要先判断能否利用没有前导零来扩大K（但考虑到碰见0时必定会开始出栈操作，所以不用加额外的预处理，只需要最后删除前导零即可）</p>
+<h5 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">string <span class="title">removeKdigits</span><span class="params">(string num, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">char</span>&gt; stk;<span class="comment">//如果用栈来储存最后弹出后还需要倒读，不妨直接用vector/deque</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; digit: num) &#123;<span class="comment">//遍历num中的字符</span></span><br><span class="line">        <span class="comment">//弹出该数位前所有比它大的数</span></span><br><span class="line">        <span class="keyword">while</span> (stk.<span class="built_in">size</span>() &gt; <span class="number">0</span> &amp;&amp; stk.<span class="built_in">back</span>() &gt; digit &amp;&amp; k) &#123;</span><br><span class="line">            stk.<span class="built_in">pop_back</span>();</span><br><span class="line">            k -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//该数入栈</span></span><br><span class="line">        stk.<span class="built_in">push_back</span>(digit);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//如果遍历之后仍有可删除的数，就从后向前删除（因为此时为单调不减序列，删除更大数）</span></span><br><span class="line">    <span class="keyword">for</span> (; k &gt; <span class="number">0</span>; --k) &#123;</span><br><span class="line">        stk.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    string ans = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">bool</span> isLeadingZero = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; digit: stk) &#123;</span><br><span class="line">        <span class="comment">//跳过前导零</span></span><br><span class="line">        <span class="keyword">if</span> (isLeadingZero &amp;&amp; digit == <span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        isLeadingZero = <span class="literal">false</span>;</span><br><span class="line">        ans += digit;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans == <span class="string">&quot;&quot;</span> ? <span class="string">&quot;0&quot;</span> : ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="题目三：简单计算器-Week5-4"><a href="#题目三：简单计算器-Week5-4" class="headerlink" title="题目三：简单计算器   Week5-4"></a>题目三：简单计算器   Week5-4</h4><details>
+    <summary>原题</summary>
+    <p>
+        给定一个四则运算的表达式的字符串，计算表达式最终的结果。<br>
+提示，输入不会出现除0，输入的数字在-1000000到100000之间，表示负数时会用括号消除歧义。
+    </p>
+</details>
+
+<h5 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h5><p>很显然是对栈的应用：中缀表达式化为后缀表达式以及逆波兰表达式的计算</p>
+<p>中缀表达式化为后缀：建立一个符号栈用于存放符号</p>
+<ol>
+<li>数字直接写入表达式</li>
+<li>左括号”(“直接入栈</li>
+<li>遇见右括号“)”直接将栈顶元素挨个出栈写入表达式，直到“(”,将其出栈（左右括号都不写入表达式）</li>
+<li>+-*&#x2F;的判别：如果空栈或者此时读到的符号优先级高于栈顶符号则将其入栈，否则出栈直至此时的符号优先级高于栈顶符号（注：不可以等于，优先级为乘除高于加减）</li>
+</ol>
+<p>逆波兰表达式的计算：建立一个数字栈用于存放操作数</p>
+<ol>
+<li>遍历字符串，遇见数字将其入栈</li>
+<li>遇见符号时弹出栈顶的两个元素按对应顺序进行对应操作，得到的结果再入栈</li>
+<li>最后余下的一个数（即栈顶）即为所得结果</li>
+</ol>
+<p>本题可以选择先将字符串转变为后缀表达式而后进行计算操作，也可以选择同时建立一个符号栈与一个数字栈，同时操作（因为不论怎样都是从左向右读入，遇到符号时操作）</p>
+<h5 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断符号优先级</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">priority</span><span class="params">(<span class="type">char</span> op1, <span class="type">char</span> op2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (op1!=<span class="string">&#x27;(&#x27;</span>&amp;&amp;(op2 == <span class="string">&#x27;+&#x27;</span> || op2 == <span class="string">&#x27;-&#x27;</span>)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//执行栈顶两数与计算符号的对应操作</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calculate</span><span class="params">(<span class="type">int</span> val1, <span class="type">int</span> val2, <span class="type">char</span> op)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>: <span class="keyword">return</span> val1 + val2;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>: <span class="keyword">return</span> val1 - val2;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>: <span class="keyword">return</span> val1 * val2;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;/&#x27;</span>: <span class="keyword">return</span> val1 / val2; <span class="comment">// 假设不会出现除以零</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 默认返回（可以省略）</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//计算中缀表达式的结果</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getResult</span><span class="params">(<span class="type">const</span> string&amp; s)</span> </span>&#123;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; value; <span class="comment">// 存储操作数</span></span><br><span class="line">    stack&lt;<span class="type">char</span>&gt; op;   <span class="comment">// 存储操作符</span></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (i &lt; s.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (s[i] == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">            i++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理数字（读到数字或者负数）</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">isdigit</span>(s[i]) || (s[i] == <span class="string">&#x27;-&#x27;</span> &amp;&amp; (i == <span class="number">0</span> || s[i - <span class="number">1</span>] == <span class="string">&#x27;(&#x27;</span>))) &#123;</span><br><span class="line">            <span class="type">int</span> num = <span class="number">0</span>;</span><br><span class="line">            <span class="type">bool</span> isNegative = (s[i] == <span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">            <span class="keyword">if</span> (isNegative) i++; <span class="comment">// 跳过负号</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (i &lt; s.<span class="built_in">size</span>() &amp;&amp; <span class="built_in">isdigit</span>(s[i])) &#123;</span><br><span class="line">                num = <span class="number">10</span> * num + (s[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            value.<span class="built_in">push</span>(isNegative ? -num : num);</span><br><span class="line">            <span class="keyword">continue</span>; <span class="comment">// 继续循环</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理左括号</span></span><br><span class="line">        <span class="keyword">if</span> (s[i] == <span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">            op.<span class="built_in">push</span>(s[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 处理右括号</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;)&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!op.<span class="built_in">empty</span>() &amp;&amp; op.<span class="built_in">top</span>() != <span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> val2 = value.<span class="built_in">top</span>(); value.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="type">int</span> val1 = value.<span class="built_in">top</span>(); value.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="type">char</span> opx = op.<span class="built_in">top</span>(); op.<span class="built_in">pop</span>();</span><br><span class="line">                value.<span class="built_in">push</span>(<span class="built_in">calculate</span>(val1, val2, opx));</span><br><span class="line">            &#125;</span><br><span class="line">            op.<span class="built_in">pop</span>(); <span class="comment">// 务必记得弹出 &#x27;(&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 处理操作符</span></span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//判断是否弹出符号</span></span><br><span class="line">            <span class="keyword">while</span> (!op.<span class="built_in">empty</span>() &amp;&amp; <span class="built_in">priority</span>(op.<span class="built_in">top</span>(), s[i])) &#123;</span><br><span class="line">                <span class="type">int</span> val2 = value.<span class="built_in">top</span>(); value.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="type">int</span> val1 = value.<span class="built_in">top</span>(); value.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="type">char</span> opx = op.<span class="built_in">top</span>(); op.<span class="built_in">pop</span>();</span><br><span class="line">                value.<span class="built_in">push</span>(<span class="built_in">calculate</span>(val1, val2, opx));</span><br><span class="line">            &#125;</span><br><span class="line">            op.<span class="built_in">push</span>(s[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理剩余的操作符</span></span><br><span class="line">    <span class="keyword">while</span> (!op.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> val2 = value.<span class="built_in">top</span>(); value.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="type">int</span> val1 = value.<span class="built_in">top</span>(); value.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="type">char</span> opx = op.<span class="built_in">top</span>(); op.<span class="built_in">pop</span>();</span><br><span class="line">        value.<span class="built_in">push</span>(<span class="built_in">calculate</span>(val1, val2, opx));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> value.<span class="built_in">top</span>(); <span class="comment">// 返回最终结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="题目四：数位组合与删除-Week6-2"><a href="#题目四：数位组合与删除-Week6-2" class="headerlink" title="题目四：数位组合与删除   Week6-2"></a>题目四：数位组合与删除   Week6-2</h4><details>
+    <summary>原题</summary>
+    <p>
+        小明定义了一个特殊的集合，该集合的元素有如下规律：<br>
+（1）1是集合元素；<br>
+（2）若x是集合的元素，则2x +1，4x+5也是集合的元素。<br>
+小明从集合中取出最小的n个元素，按从小到大的顺序组合成一个多位数，再从中删除m个数位上的数字，要求由剩下的数字组合的数最大，小明最后想得到该多位数以及删除后新组合的数。小明在设置n,m时，特别注意排除了所有数位都被删除的情况。<br>
+输入：仅一行，即n,m的值，均小于等于500<br>
+输出：两行，第一行为组合的多位数，第二行为删除后新组合的数
+    </p>
+</details>
+
+<h5 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h5><p>本题可以分为两题，一道是产生并组合多位数，一道是与第二题极其相似的删除数位</p>
+<p><strong>产生并组合多位数：</strong></p>
+<p>先试算几个，发现元素并不能按照大小有序生成，所以为了快速排序，不妨直接使用有序队列priority_queue来存储。</p>
+<p>每次取其中的最小数</p>
+<ul>
+<li>将其加入结果字符串</li>
+<li>进行1、2操作然后入队（保证一直走最左子树）</li>
+</ul>
+<p>一直重复以上操作直到达到数量要求</p>
+<p><strong>删除数位：</strong></p>
+<p>与第二题相似不过多赘述，但代码运用的方法比较有意思</p>
+<h5 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 30001</span></span><br><span class="line">std::priority_queue&lt;<span class="type">int</span> , std::vector&lt;<span class="type">int</span>&gt; , std::greater&lt;<span class="type">int</span>&gt; &gt;Num;</span><br><span class="line">std::string ans1 , ans2;</span><br><span class="line"><span class="type">int</span> K , M , L , R;</span><br><span class="line"><span class="function">std::string <span class="title">sum</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">    std::stringstream ss;</span><br><span class="line">    ss &lt;&lt; a;</span><br><span class="line">    std::string ans = ss.<span class="built_in">str</span>();</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Num.<span class="built_in">push</span>(<span class="number">1</span>); <span class="comment">//将题目条件1先入队</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;K , &amp;M);</span><br><span class="line">    <span class="type">int</span> Cnt = <span class="number">0</span> ; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//完成第一部分：产生并组合多位数</span></span><br><span class="line">    <span class="keyword">while</span>(Cnt &lt; K)&#123;</span><br><span class="line">        <span class="type">int</span> a = Num.<span class="built_in">top</span>() * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> b = Num.<span class="built_in">top</span>() * <span class="number">4</span> + <span class="number">5</span>;</span><br><span class="line">        ans1 += (<span class="built_in">sum</span>(Num.<span class="built_in">top</span>()));<span class="comment">//每次取队首操作保证是结果的递增序列</span></span><br><span class="line">        Num.<span class="built_in">pop</span>(); </span><br><span class="line">        Num.<span class="built_in">push</span>(a);</span><br><span class="line">        Num.<span class="built_in">push</span>(b);  </span><br><span class="line">        ++Cnt;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; ans1 &lt;&lt;<span class="string">&quot;\n&quot;</span>; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//完成第二部分</span></span><br><span class="line">    L = <span class="number">0</span>;R = M;</span><br><span class="line">    <span class="type">int</span> Maxx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(L &lt;= R &amp;&amp; R &lt; ans<span class="number">1.l</span>ength())&#123;<span class="comment">//从左向右遍历</span></span><br><span class="line">        <span class="comment">//while每循环一次都可以找出特定宽度中最大数字并输出（丢弃左边的所有数字），然后循环从最大的下一个数字开始搜索</span></span><br><span class="line">        <span class="comment">//R = M 的目的是寻找length - M次，有length - M个输出相当于删除M位数字</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> i = L ; i &lt;= R ; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>((ans1[i] - <span class="string">&#x27;0&#x27;</span>) &gt; Maxx) </span><br><span class="line">            &#123;</span><br><span class="line">                Maxx = (ans1[i] - <span class="string">&#x27;0&#x27;</span>)；</span><br><span class="line">                L = i + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans2 += (<span class="built_in">sum</span>(Maxx));</span><br><span class="line">        R++;</span><br><span class="line">        Maxx = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout&lt;&lt; ans2;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h5><details>
+    <summary>stringsteam简要介绍</summary>
+    <p>
+        stringsteam类说明：<br>
+        1、标准库<sstream>头文件中的一个类，用于处理字符串流<br>
+        2、像cin\cout一样输入输出，支持多种数据类型（整型、浮点型、字符串等）（注意：cout"<<"表示输入到终端，所以输入到stringstream对象也使用<<）<br>
+        3、非常适合将数值类型转换为字符串（或反向转换），因为它允许格式化输出
+    </p>
+</details>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%AE%97%E6%B3%95%EF%BC%9A%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag"># 算法：单调栈</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/10/29/twentyfour-October-twentyeight/" rel="next" title="数据结构与算法课程作业_week7">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法课程作业_week7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headImage.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ShanJHS" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A-Week1-6%EF%BC%88%E8%A1%A5%E6%A1%A3%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">数据结构与算法课程作业       Week1-6（补档）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E4%B8%80%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D%E5%8F%8D%E8%BD%AC-Week1-3"><span class="nav-number">1.0.1.</span> <span class="nav-text">题目一：字符串中的单词反转  Week1-3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">注意：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E4%BA%8C%EF%BC%9A%E7%A7%BB%E9%99%A4K%E4%BD%8D%E6%95%B0%E5%AD%97-Week5-3"><span class="nav-number">1.0.2.</span> <span class="nav-text">题目二：移除K位数字   Week5-3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9A-1"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E4%B8%89%EF%BC%9A%E7%AE%80%E5%8D%95%E8%AE%A1%E7%AE%97%E5%99%A8-Week5-4"><span class="nav-number">1.0.3.</span> <span class="nav-text">题目三：简单计算器   Week5-4</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9A-2"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-1"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E5%9B%9B%EF%BC%9A%E6%95%B0%E4%BD%8D%E7%BB%84%E5%90%88%E4%B8%8E%E5%88%A0%E9%99%A4-Week6-2"><span class="nav-number">1.0.4.</span> <span class="nav-text">题目四：数位组合与删除   Week6-2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9A-3"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A-2"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">代码：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A-1"><span class="nav-number">1.0.4.3.</span> <span class="nav-text">注意：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">山角函兽</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":320},"mobile":{"show":"true#是否在手机端显示"},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
