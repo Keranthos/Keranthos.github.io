@@ -87,7 +87,7 @@
 <meta property="og:description" content="Vue里面的一些基础知识，前端学起来感觉还是挺不一样的">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-11-02T09:42:15.000Z">
-<meta property="article:modified_time" content="2024-11-02T09:45:14.326Z">
+<meta property="article:modified_time" content="2024-11-02T11:11:17.887Z">
 <meta property="article:author" content="山角函兽">
 <meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
@@ -358,284 +358,159 @@
 
       
         <h3 id="单文件组件"><a href="#单文件组件" class="headerlink" title="单文件组件"></a>单文件组件</h3><p>将HTML、CSS、JS封装在一个文件中，一个文件就是一个组件</p>
-<script>  <template> <style>在一个文件
+<p><code>&lt;script&gt;</code> <code>&lt;template&gt;</code> <code>&lt;style&gt;</code>在一个文件</p>
+<h3 id="API风格"><a href="#API风格" class="headerlink" title="API风格"></a>API风格</h3><h4 id="选项式API"><a href="#选项式API" class="headerlink" title="选项式API"></a>选项式API</h4><p>可用包含多个选项的对象来描述组件逻辑</p>
+<p>其属性this指向当前组件</p>
+<h4 id="组合式API"><a href="#组合式API" class="headerlink" title="组合式API"></a>组合式API</h4><p>通常与<code>&lt;script setup&gt;</code>搭配，</p>
+<p>便于函数逻辑复用</p>
+<h3 id="声明式渲染"><a href="#声明式渲染" class="headerlink" title="声明式渲染"></a>声明式渲染</h3><h4 id="reactive"><a href="#reactive" class="headerlink" title="reactive:"></a>reactive:</h4><p>Vue中reactive（）声明响应式状态</p>
+<p>形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>&#123; reactive &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br></pre></td></tr></table></figure>
 
 
-### API风格
 
-##### 选项式API
+<h4 id="ref"><a href="#ref" class="headerlink" title="ref:"></a>ref:</h4><p>ref()接受任何值类型，返回包裹的对象，并可用.value读取（然后可以丢给另一个变量）</p>
+<p>注意：丢出去的是一个对象，即哪怕是const也可以更改内含值</p>
+<p>形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>&#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">const</span> message = <span class="title function_">ref</span>(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(message)</span><br></pre></td></tr></table></figure>
 
-可用包含多个选项的对象来描述组件逻辑
+<p>以上都包裹在<code>&lt;script setup&gt;</code>中</p>
+<p><strong>注意：</strong></p>
+<p>如果有一个变量接收了ref对象，那么</p>
+<p>在计算属性中（计算属性通常在setup函数即<code>&lt;script setup&gt;</code>中定义，或在组件的computed选项中）属于js逻辑，返回值需要使用.value来访问，否则访问到的就是一整个对象(比如上式，虽然成功读取了内容，但实际是一整个对象)</p>
+<p>在模板（<code>&lt;template&gt;</code>标签中，用于渲染界面的部分）或事件处理，那么不使用.value</p>
+<h4 id="双花括号语法形式"><a href="#双花括号语法形式" class="headerlink" title="双花括号语法形式"></a>双花括号语法形式</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&#123;&#123;message&#125;&#125;&lt;/h1&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>count:&#123;&#123;count.counter&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
-其属性this指向当前组件
+<p>双花括号内可以是任意有效的js表达式</p>
+<h4 id="computed-计算属性"><a href="#computed-计算属性" class="headerlink" title="computed()计算属性"></a>computed()计算属性</h4><p>它可以让我们创建一个计算属性 ref，这个 ref 会动态地根据其他响应式数据源来计算其 <code>.value</code></p>
+<p>响应式数据：指通过 Vue 提供的机制，使得数据的变化能够自动反映到视图（UI）上。当在 Vue 组件中定义数据并将其标记为响应式后，Vue 会监控这些数据的变化，并在数据变化时自动更新相关的 DOM。创建方法：</p>
+<p>1、<code>ref</code>:用于创建单一的响应式值，适用于基本类型（如字符串、数字）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> count = <span class="title function_">ref</span>(<span class="number">0</span>); <span class="comment">// 创建一个响应式计数器</span></span><br></pre></td></tr></table></figure>
 
-##### 组合式API
+<p>2、<code>reactive</code>:用于创建响应式对象，适用于复杂数据结构（如对象、数组）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; reactive &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = <span class="title function_">reactive</span>(&#123;</span><br><span class="line">  <span class="attr">count</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">todos</span>: []</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-通常与<script setup>搭配，
+<p>重新回到<code>computed</code>，它会自动追踪它所依赖的响应式数据。你在 <code>computed</code> 中使用的任何响应式属性，都会被 Vue 追踪并建立依赖关系。</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hideCompleted = <span class="title function_">ref</span>(<span class="literal">false</span>); <span class="comment">// 或者 true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> filteredTodos = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> hideCompleted.<span class="property">value</span></span><br><span class="line">    ? todos.<span class="property">value</span>.<span class="title function_">filter</span>(<span class="function">(<span class="params">t</span>) =&gt;</span> !t.<span class="property">done</span>)</span><br><span class="line">    : todos.<span class="property">value</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-便于函数逻辑复用
+<p>在此之中，<code>hideComplete</code>是一个响应式应用，<code>computed</code>访问<code>hideCompleted.value</code>时，Vue记录了这个依赖关系。这意味着，任何时候 <code>hideCompleted</code> 的值发生变化时，都会触发计算属性 <code>filteredTodos</code> 的重新计算。</p>
+<h4 id="watch侦听器"><a href="#watch侦听器" class="headerlink" title="watch侦听器"></a>watch侦听器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, watch &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> count = <span class="title function_">ref</span>(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="title function_">watch</span>(count, <span class="function">(<span class="params">newCount</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`new count is: <span class="subst">$&#123;newCount&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
+<p>解释：当使用 <code>watch</code> 来观察一个响应式引用（如 <code>count</code>），它会在该数据变化时调用传入的回调函数（当 <code>count</code> 的值变化时，Vue 会自动调用这个回调函数，并将新的值作为参数传递给它）</p>
+<p><code>watch()</code> 可以直接侦听一个 ref，并且只要 <code>count</code> 的值改变就会触发回调</p>
+<h3 id="v-bind属性绑定"><a href="#v-bind属性绑定" class="headerlink" title="v-bind属性绑定"></a>v-bind属性绑定</h3><p>指令：v-开头，vue语法一部分</p>
+<p>mustache 语法 (即双大括号) 只能用于文本插值。为了给 attribute 绑定一个动态值，需要使用 <code>v-bind</code> 指令</p>
+<p>形式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;dynamicId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<p>简写：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:id</span>=<span class="string">&quot;dynamicId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<p>冒号后面的部分 (<code>:id</code>) 是指令的“参数”。此处，元素的 <code>id</code> attribute 将与组件状态里的 <code>dynamicId</code> 属性保持同步。</p>
+<p>同样的，除了id外还可以是其他东西，比如class等等</p>
+<h3 id="v-on事件监听"><a href="#v-on事件监听" class="headerlink" title="v-on事件监听"></a>v-on事件监听</h3><p>监听DOM事件</p>
+<p>形式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">&quot;increment&quot;</span>&gt;</span>&#123;&#123; count &#125;&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<p>简写：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increment&quot;</span>&gt;</span>&#123;&#123; count &#125;&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-### 声明式渲染
 
-##### reactive:
 
-Vue中reactive（）声明响应式状态
 
-形式：
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import&#123; reactive &#125; from &#x27;vue&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="v-model表单绑定"><a href="#v-model表单绑定" class="headerlink" title="v-model表单绑定"></a>v-model表单绑定</h3><p>有时我们需要同时使用v-bind和v-on对某个DOM元素双向绑定，比如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">&quot;text&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;onInput&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">onInput</span>(<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="comment">// v-on 处理函数会接收原生 DOM 事件</span></span><br><span class="line">  <span class="comment">// 作为其参数。</span></span><br><span class="line">  text.<span class="property">value</span> = e.<span class="property">target</span>.<span class="property">value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>为了简化提供了一个v-model指令，实际上是上述操作的语法糖（语法糖：在编程语言中，为了使代码更易读、更简洁而提供的一种语法形式，比如箭头函数）</p>
+<p>形式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-##### ref:
+<p>此时会直接更改script中的text元素的值（无需上述的函数调用）</p>
+<p>不仅支持文本输入框，也支持诸如多选框、单选框、下拉框之类的输入类型</p>
+<h3 id="v-if条件渲染"><a href="#v-if条件渲染" class="headerlink" title="v-if条件渲染"></a>v-if条件渲染</h3><p>形式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-if</span>=<span class="string">&quot;awesome&quot;</span>&gt;</span>Vue is awesome!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-ref()接受任何值类型，返回包裹的对象，并可用.value读取（然后可以丢给另一个变量）
+<p>解释：这个 <code>&lt;h1&gt;</code> 标签只会在 <code>awesome</code> 的值为真值 时渲染。若 <code>awesome</code> 更改为假值，它将被从 DOM 中移除。</p>
+<p>同样的，这个if也有对应的else</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-if</span>=<span class="string">&quot;awesome&quot;</span>&gt;</span>Vue is awesome!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-else</span>&gt;</span>Oh no 😢<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-注意：丢出去的是一个对象，即哪怕是const也可以更改内含值
 
-形式：
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import&#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">const message = ref(&quot;hello&quot;)</span><br><span class="line">console.log(message)</span><br></pre></td></tr></table></figure>
 
-以上都包裹在<script setup>中
 
-###### 注意：
+<h3 id="v-for列表渲染"><a href="#v-for列表渲染" class="headerlink" title="v-for列表渲染"></a>v-for列表渲染</h3><p>用v-for渲染来自于数组的列表</p>
+<p>形式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;todo in todos&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;todo.id&quot;</span>&gt;</span></span><br><span class="line">    &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-如果有一个变量接收了ref对象，那么
+<p>解释：这里的 <code>todo</code> 是一个局部变量，表示当前正在迭代的数组元素。它只能在 <code>v-for</code> 所绑定的元素上或是其内部访问，就像函数的作用域一样。</p>
+<p>更新列表的方式：</p>
+<p>1、在原数组上操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todos.<span class="property">value</span>.<span class="title function_">push</span>(newTodo)</span><br></pre></td></tr></table></figure>
 
-在计算属性中（计算属性通常在setup函数即<script setup>中定义，或在组件的computed选项中）属于js逻辑，返回值需要使用.value来访问，否则访问到的就是一整个对象(比如上式，虽然成功读取了内容，但实际是一整个对象)
+<p>2、使用新数组代替</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todos.<span class="property">value</span> = todos.<span class="property">value</span>.<span class="title function_">filter</span>(<span class="comment">/* ... */</span>)</span><br></pre></td></tr></table></figure>
 
-在模板（<template>标签中，用于渲染界面的部分）或事件处理，那么不使用.value
 
 
 
 
 
-##### 双花括号语法形式
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&#123;&#123;message&#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;count:&#123;&#123;count.counter&#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="生命周期和模板引用"><a href="#生命周期和模板引用" class="headerlink" title="生命周期和模板引用"></a>生命周期和模板引用</h3><p>有时也会不可避免地需要手动操作 DOM</p>
+<p>这时需要使用<strong>模板引用</strong>——也就是指向模板中一个 DOM 元素的 ref</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">ref</span>=<span class="string">&quot;pElementRef&quot;</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-双花括号内可以是任意有效的js表达式
+<p>要访问该引用，我们需要声明一个同名的 ref</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pElementRef = <span class="title function_">ref</span>(<span class="literal">null</span>)</span><br></pre></td></tr></table></figure>
 
+<p>这个 ref 使用 <code>null</code> 值来初始化。这是因为当 <code>&lt;script setup&gt;</code> 执行时，DOM 元素还不存在。模板引用 ref 只能在组件<strong>挂载</strong>后访问。</p>
+<p>要在挂载之后执行代码，我们可以使用 <code>onMounted()</code> 函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; onMounted &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 此时组件已经挂载。</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
+<p>此时的<code>pElementRef</code>变量相当于指向了一个被<code>ref</code>包裹起来的DOM元素(可以在<code>&lt;script&gt;</code>中通过<code>.value</code>解析后凭借正常的H5名称访问DOM的属性)</p>
+<p><code>onMount</code>被称为<strong>生命周期钩子</strong>——它允许我们注册一个在组件的特定生命周期调用的回调函数。</p>
+<h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p>真正的 Vue 应用往往是由嵌套组件创建的。(以下代码中若无备注注明则代码位于父组件中)</p>
+<p>父组件可以在模板中渲染另一个组件作为子组件。要使用子组件，需要先导入它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">ChildComp</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildComp.vue&#x27;</span></span><br></pre></td></tr></table></figure>
 
-##### computed()计算属性
+<p>然后我们就可以在模板中使用组件，就像这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ChildComp</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
-它可以让我们创建一个计算属性 ref，这个 ref 会动态地根据其他响应式数据源来计算其 `.value`
+<p>(即相当于一个标签)</p>
+<h4 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h4><p>子组件可以通过 <strong>props</strong> 从父组件接受动态数据。首先，需要声明它所接受的 props:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ChildComp.vue --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">msg</span>: <span class="title class_">String</span></span></span><br><span class="line"><span class="language-javascript">&#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-响应式数据：指通过 Vue 提供的机制，使得数据的变化能够自动反映到视图（UI）上。当在 Vue 组件中定义数据并将其标记为响应式后，Vue 会监控这些数据的变化，并在数据变化时自动更新相关的 DOM。创建方法：
+<p>解释：<code>props</code> 是一个对象，包含了从父组件传递给当前组件的属性(名称不需要是props)</p>
+<p>注意 <code>defineProps()</code> 是一个编译时宏，并不需要导入。一旦声明，<code>msg</code> prop 就可以在子组件的模板中使用。它也可以通过 <code>defineProps()</code> 所返回的对象在 JavaScript 中访问。</p>
+<p>父组件可以像声明 HTML attributes 一样传递 props。若要传递动态值，也可以使用 <code>v-bind</code> 语法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ChildComp</span> <span class="attr">:msg</span>=<span class="string">&quot;greeting&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
-1、`ref`:用于创建单一的响应式值，适用于基本类型（如字符串、数字）
+<p>(不使用<code>v-bind</code>也可以)</p>
+<h4 id="Emits"><a href="#Emits" class="headerlink" title="Emits"></a>Emits</h4><p>除了接收 props，子组件还可以向父组件触发事件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 声明触发的事件</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> emit = <span class="title function_">defineEmits</span>([<span class="string">&#x27;response&#x27;</span>])</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// 带参数触发</span></span></span><br><span class="line"><span class="language-javascript"><span class="title function_">emit</span>(<span class="string">&#x27;response&#x27;</span>, <span class="string">&#x27;hello from child&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;;</span><br><span class="line"></span><br><span class="line">const count = ref(0); // 创建一个响应式计数器</span><br></pre></td></tr></table></figure>
+<p><code>emit()</code> 的第一个参数是事件的名称。其他所有参数都将传递给事件监听器。</p>
+<p>父组件可以使用 <code>v-on</code> 监听子组件触发的事件——这里的处理函数接收了子组件触发事件时的额外参数并将它赋值给了本地状态：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ChildComp</span> @<span class="attr">response</span>=<span class="string">&quot;(msg) =&gt; childMsg = msg&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
-2、`reactive`:用于创建响应式对象，适用于复杂数据结构（如对象、数组）
+<h4 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h4><p>除了通过 props 传递数据外，父组件还可以通过插槽将模板片段传递给子组件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ChildComp</span>&gt;</span></span><br><span class="line">  This is some slot content!</span><br><span class="line"><span class="tag">&lt;/<span class="name">ChildComp</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;;</span><br><span class="line"></span><br><span class="line">const state = reactive(&#123;</span><br><span class="line">  count: 0,</span><br><span class="line">  todos: []</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在子组件中，可以使用 <code>&lt;slot&gt;</code> 元素作为插槽出口渲染父组件中的插槽内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在子组件的模板中 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">slot</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
-重新回到`computed`，它会自动追踪它所依赖的响应式数据。你在 `computed` 中使用的任何响应式属性，都会被 Vue 追踪并建立依赖关系。
+<p><code>&lt;slot&gt;</code> 插口中的内容将被当作“默认”内容：它会在父组件没有传递任何插槽内容时显示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">slot</span>&gt;</span>Fallback content<span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-例如：
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const hideCompleted = ref(false); // 或者 true</span><br><span class="line"></span><br><span class="line">const filteredTodos = computed(() =&gt; &#123;</span><br><span class="line">  return hideCompleted.value</span><br><span class="line">    ? todos.value.filter((t) =&gt; !t.done)</span><br><span class="line">    : todos.value</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-在此之中，`hideComplete`是一个响应式应用，`computed`访问`hideCompleted.value`时，Vue记录了这个依赖关系。这意味着，任何时候 `hideCompleted` 的值发生变化时，都会触发计算属性 `filteredTodos` 的重新计算。
 
 
-
-
-
-##### watch侦听器
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ref, watch &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line"></span><br><span class="line">watch(count, (newCount) =&gt; &#123;</span><br><span class="line">  console.log(`new count is: $&#123;newCount&#125;`)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-解释：当使用 `watch` 来观察一个响应式引用（如 `count`），它会在该数据变化时调用传入的回调函数（当 `count` 的值变化时，Vue 会自动调用这个回调函数，并将新的值作为参数传递给它）
-
-`watch()` 可以直接侦听一个 ref，并且只要 `count` 的值改变就会触发回调
-
-
-
-### v-bind属性绑定
-
-指令：v-开头，vue语法一部分
-
-mustache 语法 (即双大括号) 只能用于文本插值。为了给 attribute 绑定一个动态值，需要使用 `v-bind` 指令
-
-形式：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-简写：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div :id=&quot;dynamicId&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-冒号后面的部分 (`:id`) 是指令的“参数”。此处，元素的 `id` attribute 将与组件状态里的 `dynamicId` 属性保持同步。
-
-同样的，除了id外还可以是其他东西，比如class等等
-
-### v-on事件监听
-
-监听DOM事件
-
-形式：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=&quot;increment&quot;&gt;&#123;&#123; count &#125;&#125;&lt;/button&gt;</span><br></pre></td></tr></table></figure>
-
-简写：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;increment&quot;&gt;&#123;&#123; count &#125;&#125;&lt;/button&gt;</span><br></pre></td></tr></table></figure>
-
-### v-model表单绑定
-
-有时我们需要同时使用v-bind和v-on对某个DOM元素双向绑定，比如：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input :value=&quot;text&quot; @input=&quot;onInput&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function onInput(e) &#123;</span><br><span class="line">  // v-on 处理函数会接收原生 DOM 事件</span><br><span class="line">  // 作为其参数。</span><br><span class="line">  text.value = e.target.value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-为了简化提供了一个v-model指令，实际上是上述操作的语法糖（语法糖：在编程语言中，为了使代码更易读、更简洁而提供的一种语法形式，比如箭头函数）
-
-形式：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-model=&quot;text&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-此时会直接更改script中的text元素的值（无需上述的函数调用）
-
-不仅支持文本输入框，也支持诸如多选框、单选框、下拉框之类的输入类型
-
-### v-if条件渲染
-
-形式：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 v-if=&quot;awesome&quot;&gt;Vue is awesome!&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
-
-解释：这个 `<h1>` 标签只会在 `awesome` 的值为真值 时渲染。若 `awesome` 更改为假值，它将被从 DOM 中移除。
-
-同样的，这个if也有对应的else
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 v-if=&quot;awesome&quot;&gt;Vue is awesome!&lt;/h1&gt;</span><br><span class="line">&lt;h1 v-else&gt;Oh no 😢&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
-
-### v-for列表渲染
-
-用v-for渲染来自于数组的列表
-
-形式：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li v-for=&quot;todo in todos&quot; :key=&quot;todo.id&quot;&gt;</span><br><span class="line">    &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-
-解释：这里的 `todo` 是一个局部变量，表示当前正在迭代的数组元素。它只能在 `v-for` 所绑定的元素上或是其内部访问，就像函数的作用域一样。
-
-更新列表的方式：
-
-1、在原数组上操作
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todos.value.push(newTodo)</span><br></pre></td></tr></table></figure>
-
-2、使用新数组代替
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todos.value = todos.value.filter(/* ... */)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-### 生命周期和模板引用
-
-有时也会不可避免地需要手动操作 DOM
-
-这时需要使用**模板引用**——也就是指向模板中一个 DOM 元素的 ref
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p ref=&quot;pElementRef&quot;&gt;hello&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-要访问该引用，我们需要声明一个同名的 ref
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const pElementRef = ref(null)</span><br></pre></td></tr></table></figure>
-
-这个 ref 使用 `null` 值来初始化。这是因为当 `<script setup>` 执行时，DOM 元素还不存在。模板引用 ref 只能在组件**挂载**后访问。
-
-要在挂载之后执行代码，我们可以使用 `onMounted()` 函数：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123; onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  // 此时组件已经挂载。</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-此时的`pElementRef`变量相当于指向了一个被`ref`包裹起来的DOM元素(可以在`<script>`中通过`.value`解析后凭借正常的H5名称访问DOM的属性)
-
-`onMount`被称为**生命周期钩子**——它允许我们注册一个在组件的特定生命周期调用的回调函数。
-
-
-
-
-
-
-
-### 组件
-
-真正的 Vue 应用往往是由嵌套组件创建的。(以下代码中若无备注注明则代码位于父组件中)
-
-父组件可以在模板中渲染另一个组件作为子组件。要使用子组件，需要先导入它：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import ChildComp from &#x27;./ChildComp.vue&#x27;</span><br></pre></td></tr></table></figure>
-
-然后我们就可以在模板中使用组件，就像这样：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComp /&gt;</span><br></pre></td></tr></table></figure>
-
-(即相当于一个标签)
-
-##### Props
-
-子组件可以通过 **props** 从父组件接受动态数据。首先，需要声明它所接受的 props:
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- ChildComp.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">const props = defineProps(&#123;</span><br><span class="line">  msg: String</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-解释：`props` 是一个对象，包含了从父组件传递给当前组件的属性(名称不需要是props)
-
-注意 `defineProps()` 是一个编译时宏，并不需要导入。一旦声明，`msg` prop 就可以在子组件的模板中使用。它也可以通过 `defineProps()` 所返回的对象在 JavaScript 中访问。
-
-父组件可以像声明 HTML attributes 一样传递 props。若要传递动态值，也可以使用 `v-bind` 语法：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComp :msg=&quot;greeting&quot; /&gt;</span><br></pre></td></tr></table></figure>
-
-(不使用`v-bind`也可以)
-
-##### Emits
-
-除了接收 props，子组件还可以向父组件触发事件：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">// 声明触发的事件</span><br><span class="line">const emit = defineEmits([&#x27;response&#x27;])</span><br><span class="line"></span><br><span class="line">// 带参数触发</span><br><span class="line">emit(&#x27;response&#x27;, &#x27;hello from child&#x27;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-`emit()` 的第一个参数是事件的名称。其他所有参数都将传递给事件监听器。
-
-父组件可以使用 `v-on` 监听子组件触发的事件——这里的处理函数接收了子组件触发事件时的额外参数并将它赋值给了本地状态：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComp @response=&quot;(msg) =&gt; childMsg = msg&quot; /&gt;</span><br></pre></td></tr></table></figure>
-
-##### 插槽
-
-除了通过 props 传递数据外，父组件还可以通过插槽将模板片段传递给子组件：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComp&gt;</span><br><span class="line">  This is some slot content!</span><br><span class="line">&lt;/ChildComp&gt;</span><br></pre></td></tr></table></figure>
-
-在子组件中，可以使用 `<slot>` 元素作为插槽出口渲染父组件中的插槽内容：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 在子组件的模板中 --&gt;</span><br><span class="line">&lt;slot/&gt;</span><br></pre></td></tr></table></figure>
-
-`<slot>` 插口中的内容将被当作“默认”内容：它会在父组件没有传递任何插槽内容时显示：
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;slot&gt;Fallback content&lt;/slot&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-------
-
-![微信图片_20241102174407](C:\Users\wanweijie\Desktop\微信图片_20241102174407.jpg)
+<hr>
 
       
     </div>
@@ -831,7 +706,7 @@ mustache 语法 (即双大括号) 只能用于文本插值。为了给 attribute
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%96%87%E4%BB%B6%E7%BB%84%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">单文件组件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%96%87%E4%BB%B6%E7%BB%84%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">单文件组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API%E9%A3%8E%E6%A0%BC"><span class="nav-number">2.</span> <span class="nav-text">API风格</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E9%A1%B9%E5%BC%8FAPI"><span class="nav-number">2.1.</span> <span class="nav-text">选项式API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%BC%8FAPI"><span class="nav-number">2.2.</span> <span class="nav-text">组合式API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">3.</span> <span class="nav-text">声明式渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#reactive"><span class="nav-number">3.1.</span> <span class="nav-text">reactive:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ref"><span class="nav-number">3.2.</span> <span class="nav-text">ref:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E8%8A%B1%E6%8B%AC%E5%8F%B7%E8%AF%AD%E6%B3%95%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">双花括号语法形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#computed-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><span class="nav-number">3.4.</span> <span class="nav-text">computed()计算属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#watch%E4%BE%A6%E5%90%AC%E5%99%A8"><span class="nav-number">3.5.</span> <span class="nav-text">watch侦听器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-bind%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A"><span class="nav-number">4.</span> <span class="nav-text">v-bind属性绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-on%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">5.</span> <span class="nav-text">v-on事件监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model%E8%A1%A8%E5%8D%95%E7%BB%91%E5%AE%9A"><span class="nav-number">6.</span> <span class="nav-text">v-model表单绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-if%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93"><span class="nav-number">7.</span> <span class="nav-text">v-if条件渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93"><span class="nav-number">8.</span> <span class="nav-text">v-for列表渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%92%8C%E6%A8%A1%E6%9D%BF%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">生命周期和模板引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">10.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Props"><span class="nav-number">10.1.</span> <span class="nav-text">Props</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Emits"><span class="nav-number">10.2.</span> <span class="nav-text">Emits</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E6%A7%BD"><span class="nav-number">10.3.</span> <span class="nav-text">插槽</span></a></li></ol></li></ol></div>
             
 
           </div>
